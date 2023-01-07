@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans  xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- Наш первый Bean-->
     <bean id="testBean"
           class="org.example.TestBean">
         <constructor-arg value="Smirnov"/>
     </bean>
+
+    <!-- Просто создаём Bean класса ClassicalMusic-->
     <bean id="musicBean"
           class="org.example.music.ClassicalMusic">
     </bean>
+
+    <!-- Создаём Bean через конструктор и кладём туда другой Bean-->
     <bean id="musicPlayer"
           class="org.example.music.MusicPlayer">
         <constructor-arg ref="musicBean"/>
     </bean>
 
+    <!-- Передача параметров в ручную volume, name-->
     <bean id="musicPlayer3"
           class="org.example.music.MusicPlayer">
         <property name="music" ref="musicBean"/>
@@ -26,14 +32,33 @@
         <property name="volume" value="12"/>
     </bean>
 
+    <!-- применение SCOPE и считывания данных из файла для передачи параметров volume, name -->
     <context:property-placeholder location="classpath:musicPlayer.properties"/>
     <bean id="musicPlayer4"
-          class="org.example.music.MusicPlayer">
+          class="org.example.music.MusicPlayer"
+          scope="prototype">
         <property name="music" ref="musicBean"/>
         <property name="name" value="${musicPlayer.name}"/>
         <property name="volume" value="${musicPlayer.volume}"/>
     </bean>
 
+    <!-- использование init-method и destroy-method -->
+    <bean id="musicBeanInitAdnDestroy"
+          class="org.example.music.ClassicalMusic"
+          init-method="doMyInit"
+          destroy-method="doMyDestroy">
+    </bean>
 
+    <!-- использование init-method'a и scope prototype -->
+    <bean id="musicBeanTestInitMethodScopePrototype"
+          class="org.example.music.ClassicalMusic"
+          init-method="doMyInit"
+          scope="prototype">
+    </bean>
 
+    <!-- использование factory-method -->
+    <bean id="musicBeanFactoryMethod"
+          class="org.example.music.JazzMusic"
+          factory-method="getJazzMusic">
+    </bean>
 </beans>

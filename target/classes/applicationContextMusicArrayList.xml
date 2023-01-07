@@ -21,16 +21,6 @@
           class="org.example.music.RockMusic">
     </bean>
 
-<!--    <bean id="musicPlayerArrayList"-->
-<!--          class="org.example.music.MusicPlayer">-->
-<!--        <property name="musicList">>-->
-<!--            <list>-->
-<!--                <ref bean="musicBeanClassic"/>-->
-<!--                <ref bean="musicBeanRap"/>-->
-<!--                <ref bean="musicBeanRock"/>-->
-<!--            </list>-->
-<!--        </property>-->
-
     <bean id="musicPlayerArrayList"
           class="org.example.music.MusicPlayer">
         <property name="musicList">

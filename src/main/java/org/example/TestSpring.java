@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.music.ClassicalMusic;
+import org.example.music.JazzMusic;
 import org.example.music.Music;
 import org.example.music.MusicPlayer;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -28,6 +30,21 @@ public class TestSpring {
         musicPlayer4.playMusic();
         System.out.println(musicPlayer4.getName());
         System.out.println(musicPlayer4.getVolume());
+
+        MusicPlayer musicPlayer6 = context.getBean("musicPlayer4", MusicPlayer.class);
+        musicPlayer6.setVolume(12);
+        System.out.println(musicPlayer4.getVolume());
+        System.out.println(musicPlayer6.getVolume());
+
+        ClassicalMusic classicalMusic = context.getBean("musicBeanInitAdnDestroy", ClassicalMusic.class);
+        System.out.println(classicalMusic.getSong());
+
+        ClassicalMusic classicalMusic2 = context.getBean("musicBeanTestInitMethodScopePrototype", ClassicalMusic.class);
+        ClassicalMusic classicalMusic3 = context.getBean("musicBeanTestInitMethodScopePrototype", ClassicalMusic.class);
+
+        JazzMusic jazzMusic = context.getBean("musicBeanFactoryMethod", JazzMusic.class);
+        System.out.println(jazzMusic.getSong());
+
         context.close();
 
         ClassPathXmlApplicationContext context2 = new ClassPathXmlApplicationContext(
